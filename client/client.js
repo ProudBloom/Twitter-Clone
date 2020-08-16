@@ -1,4 +1,7 @@
 const form = document.querySelector('form');
+const loadingGif = document.querySelector('.loading');
+
+loadingGif.style.display = 'none';
 
 
 form.addEventListener('submit', (event) =>
@@ -15,4 +18,7 @@ form.addEventListener('submit', (event) =>
     };
 
     console.log(tweet);
+
+    form.style.display = 'none'
+    loadingGif.style.display = 'block';
 });
