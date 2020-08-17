@@ -1,5 +1,6 @@
 const form = document.querySelector('form');
 const loadingGif = document.querySelector('.loading');
+const API_URL = 'http://localhost:5000/woofs';
 
 loadingGif.style.display = 'none';
 
@@ -12,13 +13,18 @@ form.addEventListener('submit', (event) =>
     const userName = formData.get('name');
     const message = formData.get('content');
 
-    const tweet = {
+    const woof = {
         userName,
         message,
     };
-
-    console.log(tweet);
-
     form.style.display = 'none'
     loadingGif.style.display = 'block';
+
+    fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(woof),
+        headers: {
+            'content-type': 'application/json'
+        }
+    })
 });
