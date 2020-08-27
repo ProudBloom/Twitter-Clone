@@ -4,8 +4,7 @@ const monk = require('monk');
 
 const app = express();                  //Add cors as a middleware to handle the headers
 const db = monk('localhost/woofer');
-const woofs = db.get('woofs');
-
+const woofs_collection = db.get('woofs');          //Get the collection (or cretae if doesen't exist)
 
 app.use(cors());
 app.use(express.json());                //Parses JSON body of the POST request
@@ -24,6 +23,14 @@ app.get('/', (request, response) =>
     )
 });
 
+app.get('/woofs', (request, response) =>
+    {
+        woofs_collection.find().then(woofs => 
+            {
+                response.json(woofs);
+            });
+    });
+
 app.post('/woofs', (request, response) => 
 {
     if(isWoofValid(request.body))
@@ -35,9 +42,11 @@ app.post('/woofs', (request, response) =>
             created: new Date(),
         }
 
-        woofs.insert().then(createdWoof => {
+        woofs_collection.insert(woof).then(createdWoof => {
             response.json(createdWoof);
+            console.log(createdWoof);
         })
+
     }
     else
     {
