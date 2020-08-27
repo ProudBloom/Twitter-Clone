@@ -13,3 +13,26 @@
 {
     text-align: center;
 }
+
+.woofs
+{
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.woofs div
+{
+    width: 70%;
+}
+
+.woofs div h2
+{
+    
+}
+
+.woofs div:nth-child(2n)
+{
+    background-color: rgb(235, 235, 235);
+}

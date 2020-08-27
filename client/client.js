@@ -9,20 +9,27 @@ listWoofs();
 
 function listWoofs()
 {
-    fetch(API_URL).then(response => response.json()).then((woofs) => {
-        console.log(woofs);
-        woofs.forEach(woof => {
+    woofsElement.innerHTML = '';
+    fetch(API_URL).then(response => response.json()).then((woofs) => 
+    {
+        woofs.reverse();
+        woofs.forEach(woof => 
+        {
             const div = document.createElement('div');
             const header = document.createElement('h3');
             const contents = document.createElement('p');
+            const date = document.createElement('small');
 
             header.textContent = woof.userName;
             contents.textContent = woof.message;
+            date.textContent = new Date(woof.created);
 
             div.appendChild(header);
             div.appendChild(contents);
+            div.appendChild(date);
 
             woofsElement.appendChild(div);
+            loadingGif.style.display = 'none';
         })
     });
 }
@@ -35,7 +42,8 @@ form.addEventListener('submit', (event) =>
     const userName = formData.get('name');
     const message = formData.get('content');
     
-    const woof = {
+    const woof = 
+    {
         userName,
         message,
     };
@@ -47,10 +55,11 @@ form.addEventListener('submit', (event) =>
         method: 'POST',
         body: JSON.stringify(woof),
         headers: {'content-type': 'application/json'}
-    }).then(response => response.json()).then(createdWoof => {
-        console.log(createdWoof);
-        form.style.display = ''
-        loadingGif.style.display = 'none';
-        form.reset();
     })
+        .then(response => response.json()).then(createdWoof => {
+            console.log(createdWoof);
+            form.style.display = ''
+            form.reset();
+            listWoofs();
+        });
 });
