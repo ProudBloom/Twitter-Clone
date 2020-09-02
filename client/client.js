@@ -58,8 +58,10 @@ form.addEventListener('submit', (event) =>
     })
         .then(response => response.json()).then(createdWoof => {
             console.log(createdWoof);
-            form.style.display = ''
             form.reset();
+            setTimeout(() => {
+                form.style.display = ''
+            }, 30000)
             listWoofs();
         });
 });
